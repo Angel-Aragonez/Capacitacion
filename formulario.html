@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulario de TICs</title>
+
+    <link rel="stylesheet" href="Style_index.css">
+</head>
+
+<body>
+
+<h1>Capacitación de TICs</h1>
+
+<nav>
+    <a href="index.html">Inicio</a>
+    <a href="html2.html">Steve Jobs</a>
+    <a href="html3.html">Bill Gates</a>
+    <a href="galeria.html">Galería</a>
+</nav>
+
+<h2>Formulario de Capacitación en TICs</h2>
+
+<div class= "banner-nombre" id="banner-nombre">
+    <p style="text-align: center; background-color: #0a1a2f; color: #e3f3ff ;"<label for="nombre">¿Cuál es tu nombre?</label>
+    <input type="text" id="nombre" placeholder="Escribe tu nombre completo aquí">
+    <span class="mensaje-error" id="error-nombre">Este campo es obligatorio.</span></p>
+</div>
+
+<div class="form-contenedor" id="seccion-formulario">
+
+    <div class="form-grupo">
+        <label>1. ¿Cuál es tu nivel actual de conocimiento en tecnologías de la información?</label>
+        <hr class="form-divider">
+        <div class="radio-grupo">
+            <label><input type="radio" name="nivel" value="Ninguno"> Ninguno</label>
+            <label><input type="radio" name="nivel" value="Básico"> Básico</label>
+            <label><input type="radio" name="nivel" value="Intermedio"> Intermedio</label>
+            <label><input type="radio" name="nivel" value="Avanzado"> Avanzado</label>
+            <label><input type="radio" name="nivel" value="Experto"> Experto</label>
+        </div>
+        <span class="mensaje-error" id="error-nivel">Selecciona una opción.</span>
+    </div>
+
+    <div class="form-grupo">
+        <label>2. ¿Qué área de las TIC te interesa más? <em style="font-weight:normal;font-size:90%;">(puedes elegir varias)</em></label>
+        <hr class="form-divider">
+        <div class="checkbox-grupo">
+            <label><input type="checkbox" name="area" value="Programación"> Programación</label>
+            <label><input type="checkbox" name="area" value="Redes"> Redes</label>
+            <label><input type="checkbox" name="area" value="Diseño web"> Diseño web</label>
+            <label><input type="checkbox" name="area" value="Ciberseguridad"> Ciberseguridad</label>
+            <label><input type="checkbox" name="area" value="Bases de datos"> Bases de datos</label>
+            <label><input type="checkbox" name="area" value="Inteligencia artificial"> Inteligencia artificial</label>
+            <label><input type="checkbox" name="area" value="Soporte técnico"> Soporte técnico</label>
+            <label><input type="checkbox" name="area" value="Otro"> Otro</label>
+        </div>
+        <span class="mensaje-error" id="error-area">Selecciona al menos una opción.</span>
+    </div>
+
+    <div class="form-grupo">
+        <label>3. ¿Has tomado anteriormente algún curso o capacitación en TICs?</label>
+        <hr class="form-divider">
+        <div class="radio-grupo">
+            <label><input type="radio" name="curso" value="Sí"> Sí</label>
+            <label><input type="radio" name="curso" value="No"> No</label>
+        </div>
+        <span class="mensaje-error" id="error-curso">Selecciona una opción.</span>
+    </div>
+
+    <div class="form-grupo">
+        <label for="objetivo">4. ¿Cuál es tu objetivo principal al inscribirte en esta capacitación?</label>
+        <hr class="form-divider">
+        <textarea id="objetivo" placeholder="Describe tu objetivo principal..."></textarea>
+        <span class="mensaje-error" id="error-objetivo">Este campo es obligatorio.</span>
+    </div>
+
+    <div class="form-grupo">
+        <label>5. ¿Cuánto tiempo al día usas la tecnología?</label>
+        <hr class="form-divider">
+        <div class="radio-grupo">
+            <label><input type="radio" name="tiempo" value="Menos de 1 hora"> Menos de 1 hora</label>
+            <label><input type="radio" name="tiempo" value="1 a 3 horas"> 1 a 3 horas</label>
+            <label><input type="radio" name="tiempo" value="3 a 6 horas"> 3 a 6 horas</label>
+            <label><input type="radio" name="tiempo" value="Más de 6 horas"> Más de 6 horas</label>
+        </div>
+        <span class="mensaje-error" id="error-tiempo">Selecciona una opción.</span>
+    </div>
+
+    <div class="form-grupo">
+        <label for="herramientas">6. ¿Qué herramientas o programas tecnológicos sabes utilizar actualmente?</label>
+        <hr class="form-divider">
+        <textarea id="herramientas" placeholder="Ejemplo: Word, Excel, Photoshop, VS Code..."></textarea>
+        <span class="mensaje-error" id="error-herramientas">Este campo es obligatorio.</span>
+    </div>
+
+    <button class="btn-enviar" onclick="enviarFormulario()">Enviar respuestas</button>
+</div>
+
+<div id="panel-resultados">
+    <h3>✔ Respuestas Registradas</h3>
+    <div id="tabla-resultados"></div>
+    <button class="btn-descargar" onclick="descargarEvidencia()">Descargar evidencia (.txt)</button>
+    <button class="btn-nuevo" onclick="nuevoFormulario()">Llenar de nuevo</button>
+</div>
+
+<footer>
+    Matriculas: 23190054/23190072
+</footer>
+
+<script>
+    function obtenerRadio(nombre) {
+        const radios = document.querySelectorAll(`input[name="${nombre}"]`);
+        for (const r of radios) { if (r.checked) return r.value; }
+        return '';
+    }
+
+    function obtenerCheckboxes(nombre) {
+        const checks = document.querySelectorAll(`input[name="${nombre}"]:checked`);
+        return Array.from(checks).map(c => c.value).join(', ');
+    }
+
+    function mostrarError(id, mostrar) {
+        document.getElementById(id).style.display = mostrar ? 'block' : 'none';
+    }
+
+    function enviarFormulario() {
+        const nombre       = document.getElementById('nombre').value.trim();
+        const nivel        = obtenerRadio('nivel');
+        const area         = obtenerCheckboxes('area');
+        const curso        = obtenerRadio('curso');
+        const objetivo     = document.getElementById('objetivo').value.trim();
+        const tiempo       = obtenerRadio('tiempo');
+        const herramientas = document.getElementById('herramientas').value.trim();
+
+        let valido = true;
+
+        if (!nombre)       { mostrarError('error-nombre', true);       valido = false; }
+        else                 mostrarError('error-nombre', false);
+
+        if (!nivel)        { mostrarError('error-nivel', true);        valido = false; }
+        else                 mostrarError('error-nivel', false);
+
+        if (!area)         { mostrarError('error-area', true);         valido = false; }
+        else                 mostrarError('error-area', false);
+
+        if (!curso)        { mostrarError('error-curso', true);        valido = false; }
+        else                 mostrarError('error-curso', false);
+
+        if (!objetivo)     { mostrarError('error-objetivo', true);     valido = false; }
+        else                 mostrarError('error-objetivo', false);
+
+        if (!tiempo)       { mostrarError('error-tiempo', true);       valido = false; }
+        else                 mostrarError('error-tiempo', false);
+
+        if (!herramientas) { mostrarError('error-herramientas', true); valido = false; }
+        else                 mostrarError('error-herramientas', false);
+
+        if (!valido) return;
+
+        const respuestas = { nombre, nivel, area, curso, objetivo, tiempo, herramientas,
+                             fecha: new Date().toLocaleString('es-MX') };
+        localStorage.setItem('formulario_respuestas', JSON.stringify(respuestas));
+        mostrarResultados(respuestas);
+    }
+
+    function mostrarResultados(r) {
+        const filas = [
+            ['Nombre',                          r.nombre],
+            ['Nivel de conocimiento en TICs',   r.nivel],
+            ['Áreas de interés',                r.area],
+            ['Curso o capacitación previa',     r.curso],
+            ['Objetivo en la capacitación',     r.objetivo],
+            ['Tiempo diario usando tecnología', r.tiempo],
+            ['Herramientas que conoce',         r.herramientas],
+            ['Fecha de envío',                  r.fecha]
+        ];
+
+        let html = '';
+        for (const [preg, resp] of filas) {
+            html += `<div class="resultado-fila">
+                        <div class="resultado-pregunta">${preg}</div>
+                        <div class="resultado-respuesta">${resp}</div>
+                     </div>`;
+        }
+
+        document.getElementById('tabla-resultados').innerHTML = html;
+        document.getElementById('banner-nombre').style.display  = 'none';
+        document.getElementById('seccion-formulario').style.display = 'none';
+        document.getElementById('panel-resultados').style.display = 'block';
+        document.getElementById('panel-resultados').scrollIntoView({ behavior: 'instant' });
+    }
+
+    function nuevoFormulario() {
+        document.getElementById('nombre').value = '';
+        document.querySelectorAll('input[name="nivel"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="area"]').forEach(c => c.checked = false);
+        document.querySelectorAll('input[name="curso"]').forEach(r => r.checked = false);
+        document.getElementById('objetivo').value = '';
+        document.querySelectorAll('input[name="tiempo"]').forEach(r => r.checked = false);
+        document.getElementById('herramientas').value = '';
+
+        document.getElementById('panel-resultados').style.display    = 'none';
+        document.getElementById('banner-nombre').style.display       = 'block';
+        document.getElementById('seccion-formulario').style.display  = 'block';
+        document.getElementById('banner-nombre').scrollIntoView({ behavior: 'instant' });
+    }
+
+    function descargarEvidencia() {
+        const guardado = localStorage.getItem('formulario_respuestas');
+        if (!guardado) return;
+        const r = JSON.parse(guardado);
+
+        const texto =
+`EVIDENCIA DE FORMULARIO - Capacitación en TICs
+=====================================================
+Fecha de envío                    : ${r.fecha}
+Nombre                            : ${r.nombre}
+Nivel de conocimiento en TICs     : ${r.nivel}
+Áreas de interés                  : ${r.area}
+Curso o capacitación previa       : ${r.curso}
+Objetivo en la capacitación       : ${r.objetivo}
+Tiempo diario usando tecnología   : ${r.tiempo}
+Herramientas que conoce           : ${r.herramientas}
+=====================================================
+Matrículas: 23190054 / 23190072`;
+
+        const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'evidencia_formulario.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</body>
+</html>

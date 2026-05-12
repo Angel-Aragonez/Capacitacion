@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>-Galeria-</title>
+    
+    <link rel="stylesheet" href="Style_index.css">
+</head>
+
+<body>
+
+<h1>Capacitación de TICs</h1>
+
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="html2.html">Steve Jobs</a>
+        <a href="html3.html">Bill Gates</a>
+        <a href="formulario.html">Formulario</a>
+    </nav>
+
+<h2>Galería de Trabajos</h2>
+
+<p class="intro-galeria">Aquí podras ver algunos de mis trabajos realizados durante toda la capacitación de TICs, dale clic a cualquier imagen para verla completa.</p>
+
+<div class="galeria-grid">
+
+    <div class="galeria-item" onclick="abrirLightbox(0)">
+        <img src="imagenes/App are.png">
+        <p>Una app para calcular las areas de las figuras.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(1)">
+        <img src="imagenes/App Dia.png">
+        <p>Una app sobre la informacion del dia de Muertos.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(2)">
+        <img src="imagenes/App in.jpg">
+        <p>App que contiene todas las funciones de trabajos anteriores.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(3)">
+        <img src="imagenes/Caso-uso.png">
+        <p>Tabla de pasos que sigue un usuario en una app.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(4)">
+        <img src="imagenes/Dia1.png">
+        <p>Diagrama de flujo sobre el triple de dos digitos.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(5)">
+        <img src="imagenes/Dia2.png">
+        <p>Diagrama de flujo de una casa de cambio.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(6)">
+        <img src="imagenes/Excel gra.png">
+        <p>Grafica sobre ventas.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(7)">
+        <img src="imagenes/Excel tab.png">
+        <p>Tabla de calificaciones.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(8)">
+        <img src="imagenes/Linux info.png">
+        <p>Información sobre el sistema operativo Linux.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(9)">
+        <img src="imagenes/Linux.png">
+        <p>Sistema operativo Linux en una maquina virtual.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(10)">
+        <img src="imagenes/Ph1.png">
+        <p>Portada de revista hecha en photoshop</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(11)">
+        <img src="imagenes/Ph2.png">
+        <p>Dibujo realizado en photoshop</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(12)">
+        <img src="imagenes/Ph3.png">
+        <p>Efecto de pintura en texto.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(13)">
+        <img src="imagenes/Ph4.png">
+        <p>Tipos de efecto en photoshop.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(14)">
+        <img src="imagenes/Redes.png">
+        <p>Gestion de servidores.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(15)">
+        <img src="imagenes/PSeint.png">
+        <p>Diagrama de flujo sobre un sorteo de numeros.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(16)">
+        <img src="imagenes/Sistemas Info.png">
+        <p>Informacion sobre sistemas operativos.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(17)">
+        <img src="imagenes/Wind info.png">
+        <p>Informacion sobre el sistema operativo Windows.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(18)">
+        <img src="imagenes/Wind-V.png">
+        <p>Sistema operativo Windows en una maquina virtual.</p>
+    </div>
+
+    <div class="galeria-item" onclick="abrirLightbox(19)">
+        <img src="imagenes/Word doc.png">
+        <p>Documento de Word, toda la informacion de la pagina Web.</p>
+    </div>
+
+</div>
+
+<div id="lightbox">
+    <button id="lightbox-cerrar" onclick="cerrarLightbox()">✕</button>
+    <img id="lightbox-img" src="" alt="">
+    <p id="lightbox-caption"></p>
+    <div class="nav-galeria">
+        <button onclick="cambiarImagen(-1)">&#9664; Anterior</button>
+        <button onclick="cambiarImagen(1)">Siguiente &#9654;</button>
+    </div>
+</div>
+
+<footer>
+    Matriculas: 23190054/23190072
+</footer>
+
+<script>
+    const items = document.querySelectorAll('.galeria-item');
+    const imagenes = Array.from(items).map(item => ({
+        src: item.querySelector('img').src,
+        alt: item.querySelector('img').alt,
+        caption: item.querySelector('p').textContent
+    }));
+
+    let indiceActual = 0;
+
+    function abrirLightbox(indice) {
+        indiceActual = indice;
+        mostrarImagen();
+        document.getElementById('lightbox').classList.add('activo');
+    }
+
+    function cerrarLightbox() {
+        document.getElementById('lightbox').classList.remove('activo');
+    }
+
+    function mostrarImagen() {
+        document.getElementById('lightbox-img').src = imagenes[indiceActual].src;
+        document.getElementById('lightbox-img').alt = imagenes[indiceActual].alt;
+        document.getElementById('lightbox-caption').textContent = imagenes[indiceActual].caption;
+    }
+
+    function cambiarImagen(direccion) {
+        indiceActual = (indiceActual + direccion + imagenes.length) % imagenes.length;
+        mostrarImagen();
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) cerrarLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        const lb = document.getElementById('lightbox');
+        if (!lb.classList.contains('activo')) return;
+        if (e.key === 'Escape') cerrarLightbox();
+        if (e.key === 'ArrowLeft') cambiarImagen(-1);
+        if (e.key === 'ArrowRight') cambiarImagen(1);
+    });
+</script>
+
+</body>
+</html>
